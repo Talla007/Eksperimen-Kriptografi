@@ -19,7 +19,7 @@ colorama.reinit = lambda *args, **kwargs: None
 
 # Helper to dynamically import modules
 def get_module(name, path):
-    abs_path = os.path.abspath(path)
+    abs_path = os.path.abspath(os.path.join(DIRECTORY, path))
     if not os.path.exists(abs_path):
         return None
     spec = importlib.util.spec_from_file_location(name, abs_path)
@@ -55,7 +55,7 @@ class CryptoAPIHandler(http.server.SimpleHTTPRequestHandler):
             except Exception:
                 data = {}
 
-            response_data = self.handle_api(self.path, data)
+            response_data = handle_api(self.path, data)
             
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
@@ -65,7 +65,7 @@ class CryptoAPIHandler(http.server.SimpleHTTPRequestHandler):
         else:
             self.send_error(404, "File not found")
 
-    def handle_api(self, path, data):
+def handle_api(path, data):
         endpoint = path.replace("/api/", "")
         
         try:
@@ -352,6 +352,93 @@ class CryptoAPIHandler(http.server.SimpleHTTPRequestHandler):
             return {"success": False, "error": f"Unknown endpoint: {endpoint}"}
         except Exception as e:
             return {"success": False, "error": str(e)}
+
+def wsgi_app(environ, start_response):
+    path = environ.get('PATH_INFO', '/')
+    method = environ.get('REQUEST_METHOD', 'GET')
+    
+    if method == 'GET':
+        if path == '/' or path == '/index.html':
+            filepath = os.path.join(DIRECTORY, 'index.html')
+            content_type = 'text/html; charset=utf-8'
+        elif path == '/style.css':
+            filepath = os.path.join(DIRECTORY, 'style.css')
+            content_type = 'text/css; charset=utf-8'
+        elif path == '/app.js':
+            filepath = os.path.join(DIRECTORY, 'app.js')
+            content_type = 'application/javascript; charset=utf-8'
+        else:
+            rel_path = path.lstrip('/')
+            filepath = os.path.join(DIRECTORY, rel_path)
+            if os.path.isfile(filepath) and not rel_path.startswith('.'):
+                if filepath.endswith('.html'):
+                    content_type = 'text/html; charset=utf-8'
+                elif filepath.endswith('.css'):
+                    content_type = 'text/css; charset=utf-8'
+                elif filepath.endswith('.js'):
+                    content_type = 'application/javascript; charset=utf-8'
+                elif filepath.endswith('.png'):
+                    content_type = 'image/png'
+                elif filepath.endswith('.webp'):
+                    content_type = 'image/webp'
+                elif filepath.endswith('.ico'):
+                    content_type = 'image/x-icon'
+                else:
+                    content_type = 'application/octet-stream'
+            else:
+                start_response('404 Not Found', [('Content-Type', 'text/plain')])
+                return [b'404 Not Found']
+
+        try:
+            with open(filepath, 'rb') as f:
+                content = f.read()
+            start_response('200 OK', [
+                ('Content-Type', content_type),
+                ('Content-Length', str(len(content))),
+                ('Access-Control-Allow-Origin', '*')
+            ])
+            return [content]
+        except Exception as e:
+            start_response('500 Internal Server Error', [('Content-Type', 'text/plain')])
+            return [f"500 Internal Server Error: {str(e)}".encode('utf-8')]
+            
+    elif method == 'POST' and path.startswith('/api/'):
+        try:
+            content_length = int(environ.get('CONTENT_LENGTH', 0))
+        except ValueError:
+            content_length = 0
+            
+        post_data = environ['wsgi.input'].read(content_length)
+        try:
+            data = json.loads(post_data.decode('utf-8'))
+        except Exception:
+            data = {}
+            
+        response_data = handle_api(path, data)
+        response_bytes = json.dumps(response_data).encode('utf-8')
+        
+        start_response('200 OK', [
+            ('Content-Type', 'application/json; charset=utf-8'),
+            ('Content-Length', str(len(response_bytes))),
+            ('Access-Control-Allow-Origin', '*')
+        ])
+        return [response_bytes]
+        
+    elif method == 'OPTIONS':
+        start_response('204 No Content', [
+            ('Access-Control-Allow-Origin', '*'),
+            ('Access-Control-Allow-Methods', 'GET, POST, OPTIONS'),
+            ('Access-Control-Allow-Headers', 'Content-Type'),
+        ])
+        return [b'']
+        
+    else:
+        start_response('405 Method Not Allowed', [('Content-Type', 'text/plain')])
+        return [b'405 Method Not Allowed']
+
+app = wsgi_app
+application = wsgi_app
+handler = wsgi_app
 
 if __name__ == "__main__":
     # Standard static files server with Custom API handler
