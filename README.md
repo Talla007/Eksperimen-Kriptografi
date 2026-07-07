@@ -5,7 +5,7 @@
 2. Athallah Abrar Duano - 2410511046
 3. Sulthon Daffa Arrafi - 2410511061
 
-Repositori ini berisi kumpulan implementasi praktis dan simulasi laboratorium untuk mata kuliah Kriptografi di Semester 4 Peminatan Cyber Security. Seluruh kode ditulis menggunakan Python dengan fokus pada pemahaman konsep teoretis, visualisasi proses, serta demonstrasi kekuatan dan kelemahan masing-masing algoritma.
+Repositori ini berisi kumpulan implementasi praktis dan simulasi laboratorium untuk mata kuliah Kriptografi di Kelas A Peminatan Cyber Security. Seluruh kode ditulis menggunakan Python dengan fokus pada pemahaman konsep teoretis, visualisasi proses, serta demonstrasi kekuatan dan kelemahan masing-masing algoritma.
 
 ---
 
@@ -39,12 +39,9 @@ crypto_experiments/
 ├── 05_digital_signature/            ← Tanda Tangan Digital
 │   └── dsa_rsa_sign.py              → Skema RSA-PSS dan DSA, serta Integritas Dokumen Legal
 │
-├── 06_attacks/                      ← Simulasi Kriptanalisis dan Serangan
-│   ├── frequency_analysis.py        → Analisis Frekuensi Huruf dan Klasifikasi Cipher
-│   └── birthday_attack.py           → Simulasi Birthday Paradox dan Pencarian Collision
-│
-└── 07_secure_crud/                  ← Aplikasi Praktis
-    └── secure_crud.py               → CRUD Catatan Aman (AES-256 + HMAC)
+└── 06_attacks/                      ← Simulasi Kriptanalisis dan Serangan
+    ├── frequency_analysis.py        → Analisis Frekuensi Huruf dan Klasifikasi Cipher
+    └── birthday_attack.py           → Simulasi Birthday Paradox dan Pencarian Collision
 ```
 
 ---
@@ -102,9 +99,6 @@ python 03_asymmetric/rsa_demo.py
 *   **Frequency Analysis Attack:** Serangan terhadap cipher substitusi klasik dengan menganalisis kecenderungan kemunculan huruf pada bahasa tertentu (disajikan dalam bentuk visualisasi ASCII bar chart).
 *   **Birthday Attack Simulation:** Eksperimen praktis untuk mendemonstrasikan kelemahan fungsi hash terhadap tumbukan (*collision*). Menunjukkan cara kerja Birthday Paradox untuk mencari collision pada hash pendek 16-bit dan partial collision MD5 20-bit.
 
-### Modul 7: Aplikasi Praktis
-*   **Secure CRUD Catatan Aman:** Implementasi integratif pengelola catatan terenkripsi. Menggunakan KDF (PBKDF2) untuk derivasi kunci enkripsi dan integritas dari Master Password, enkripsi simetris AES-256-CBC untuk menyembunyikan isi data catatan, dan HMAC-SHA256 untuk menjamin integritas berkas database JSON terhadap manipulasi di luar aplikasi.
-
 ---
 
 ## Kebutuhan Sistem dan Pustaka
@@ -135,4 +129,4 @@ python 03_asymmetric/rsa_demo.py
 Eksperimen yang terdapat dalam proyek ini disediakan murni untuk keperluan akademis, pendidikan, dan pembelajaran mandiri. Kode demonstrasi penyerangan (seperti brute force, analisis frekuensi, dan birthday attack) ditujukan untuk memahami kelemahan algoritma lama dan tidak boleh digunakan untuk aktivitas ilegal atau merugikan pihak lain.
 
 ---
-*Mata Kuliah Kriptografi - Semester 4 - Peminatan Cyber Security*
+*Mata Kuliah Kriptografi - Kelas A - Peminatan Cyber Security*

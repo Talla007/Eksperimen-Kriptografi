@@ -2,7 +2,7 @@
 """
 =============================================================
   EKSPERIMEN KRIPTOGRAFI - MATA KULIAH KRIPTOGRAFI
-  Semester 4 - Peminatan Cyber Security
+  Kelas A - Peminatan Cyber Security
 =============================================================
   Launcher utama untuk semua eksperimen kriptografi.
   Jalankan: python main.py
@@ -31,19 +31,19 @@ except ImportError:
 BANNER = r"""
   ╔══════════════════════════════════════════════════════════════════╗
   ║                                                                  ║
-  ║    ██████╗██████╗ ██╗   ██╗██████╗ ████████╗ ██████╗             ║
-  ║   ██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗╚══██╔══╝██╔═══██╗            ║
-  ║   ██║     ██████╔╝ ╚████╔╝ ██████╔╝   ██║   ██║   ██║            ║
-  ║   ██║     ██╔══██╗  ╚██╔╝  ██╔═══╝    ██║   ██║   ██║            ║
-  ║   ╚██████╗██║  ██║   ██║   ██║        ██║   ╚██████╔╝            ║
-  ║    ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝        ╚═╝    ╚═════╝             ║
+  ║     ██████╗██████╗ ██╗   ██╗██████╗ ████████╗ ██████╗            ║
+  ║    ██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗╚══██╔══╝██╔═══██╗           ║
+  ║    ██║     ██████╔╝ ╚████╔╝ ██████╔╝   ██║   ██║   ██║           ║
+  ║    ██║     ██╔══██╗  ╚██╔╝  ██╔═══╝    ██║   ██║   ██║           ║
+  ║    ╚██████╗██║  ██║   ██║   ██║        ██║   ╚██████╔╝           ║
+  ║     ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝        ╚═╝    ╚═════╝            ║
   ║                                                                  ║
-  ║         EKSPERIMEN KRIPTOGRAFI - SEMESTER 4                      ║
-  ║              Peminatan Cyber Security                            ║
-  ║         Anggota Kelompok:                                        ║
-  ║         1. Atalla Ahsan Indrayana - 2410511039                   ║
-  ║         2. Athallah Abrar Duano - 2410511046                     ║
-  ║         3. Sulthon Daffa Arrafi - 2410511061                     ║
+  ║            EKSPERIMEN KRIPTOGRAFI - KELAS A                      ║
+  ║                    UAS Cyber Security                            ║
+  ║           Anggota Kelompok:                                      ║
+  ║           1. Atalla Ahsan Indrayana - 2410511039                 ║
+  ║           2. Athallah Abrar Duano   - 2410511046                 ║
+  ║           3. Sulthon Daffa Arrafi   - 2410511061                 ║
   ║                                                                  ║
   ╚══════════════════════════════════════════════════════════════════╝
 """
@@ -72,9 +72,6 @@ MENU_ITEMS = [
     ("6", "Simulasi Serangan", [
         ("6a", "Frequency Analysis Attack",              "06_attacks/frequency_analysis.py"),
         ("6b", "Birthday Attack Simulation",             "06_attacks/birthday_attack.py"),
-    ]),
-    ("7", "Aplikasi Praktis", [
-        ("7a", "CRUD Catatan Aman (AES-256 + HMAC)",     "07_secure_crud/secure_crud.py"),
     ]),
 ]
 
@@ -151,7 +148,7 @@ def main():
 
         if current_group is None:
             print_main_menu()
-            choice = input(Fore.CYAN + Style.BRIGHT + "  Pilih Kategori (1-7) atau opsi lainnya: ").strip().lower()
+            choice = input(Fore.CYAN + Style.BRIGHT + "  Pilih Kategori (1-6) atau opsi lainnya: ").strip().lower()
 
             if choice in ("q", "quit", "exit"):
                 print(Fore.YELLOW + "\n  Terima kasih telah menggunakan program ini. Sampai jumpa!\n")
@@ -163,7 +160,7 @@ def main():
             elif choice in groups:
                 current_group = choice
             else:
-                print(Fore.RED + f"\n  [ERROR] Pilihan '{choice}' tidak valid. Silakan pilih 1-7, A, atau Q.")
+                print(Fore.RED + f"\n  [ERROR] Pilihan '{choice}' tidak valid. Silakan pilih 1-6, A, atau Q.")
                 input(Fore.CYAN + "  Tekan ENTER untuk melanjutkan...")
         else:
             group_name, items = groups[current_group]

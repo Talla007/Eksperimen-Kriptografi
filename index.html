@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UAS Kriptografi - Kelas A</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Chart.js CDN for beautiful interactive charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <h2>UAS KRIPTOGRAFI</h2>
+                <p>UAS Cyber Security • Kelas A</p>
+            </div>
+            
+            <div class="members-panel">
+                <p class="panel-title">Anggota Kelompok:</p>
+                <ol class="members-list">
+                    <li>Atalla Ahsan Indrayana <span class="nim">2410511039</span></li>
+                    <li>Athallah Abrar Duano <span class="nim">2410511046</span></li>
+                    <li>Sulthon Daffa Arrafi <span class="nim">2410511061</span></li>
+                </ol>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-target="page-home">Menu Utama</a>
+                <a href="#" class="nav-item" data-target="page-classical">1. Kriptografi Klasik</a>
+                <a href="#" class="nav-item" data-target="page-symmetric">2. Kriptografi Simetris</a>
+                <a href="#" class="nav-item" data-target="page-asymmetric">3. Kriptografi Asimetris</a>
+                <a href="#" class="nav-item" data-target="page-hash">4. Fungsi Hash & MAC</a>
+                <a href="#" class="nav-item" data-target="page-signature">5. Tanda Tangan Digital</a>
+                <a href="#" class="nav-item" data-target="page-attacks">6. Simulasi Serangan</a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT AREA -->
+        <main class="main-content">
+            
+            <!-- PAGE: MENU UTAMA -->
+            <section id="page-home" class="page-section active">
+                <div class="title-banner">
+                    <h1 class="title-header">Eksperimen Kriptografi Interaktif</h1>
+                    <p class="subtitle-header">Laboratorium Visualisasi & Simulasi Kriptografi Kelas A Cyber Security</p>
+                </div>
+                <h3>Selamat Datang!</h3>
+                <p>Aplikasi web interaktif ini memvisualisasikan teori, implementasi, kekuatan, serta kelemahan berbagai algoritma kriptografi. Silakan pilih kategori eksperimen di panel samping untuk memulai eksplorasi secara interaktif.</p>
+                
+                <div class="features-grid">
+                    <div class="crypto-card">
+                        <h4 style="color:#6366f1;">Modul 1 & 2: Klasik & Simetris</h4>
+                        <p>Mulai dari Caesar, Vigenere, dan Playfair Cipher, hingga standar enkripsi industri modern AES-256 dan DES.</p>
+                    </div>
+                    <div class="crypto-card">
+                        <h4 style="color:#10b981;">Modul 3 & 4: Asimetris, Hash & MAC</h4>
+                        <p>Pertukaran kunci Diffie-Hellman, enkripsi kunci publik RSA-2048, one-way hash, serta Message Authentication Code (HMAC).</p>
+                    </div>
+                    <div class="crypto-card">
+                        <h4 style="color:#f59e0b;">Modul 5 & 6: Signature & Serangan</h4>
+                        <p>Tanda tangan digital (RSA-PSS & DSA) serta simulasi Frequency Analysis & Birthday Paradox secara interaktif.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: CLASSICAL CIPHERS -->
+            <section id="page-classical" class="page-section">
+                <div class="title-banner">
+                    <h1 class="title-header">Kriptografi Klasik</h1>
+                    <p class="subtitle-header">Substitusi Karakter & Analisis Kunci</p>
+                </div>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="tab-caesar">Caesar Cipher</button>
+                        <button class="tab-button" data-tab="tab-vigenere">Vigenere Cipher</button>
+                        <button class="tab-button" data-tab="tab-playfair">Playfair Cipher</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="tab-caesar">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Enkripsi & Dekripsi Caesar</h3>
+                                <div class="form-group">
+                                    <label for="caesar-text">Input Teks:</label>
+                                    <textarea id="caesar-text" rows="3">HELLOCRYPTO</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="caesar-shift">Pergeseran (Shift: 0-25): <span id="caesar-shift-val">3</span></label>
+                                    <input type="range" id="caesar-shift" min="0" max="25" value="3">
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="runCaesar('encrypt')">Enkripsi</button>
+                                    <button class="btn btn-secondary" onclick="runCaesar('decrypt')">Dekripsi</button>
+                                </div>
+                                <div id="caesar-result-container" class="output-box" style="display:none;">
+                                    <strong>Hasil:</strong>
+                                    <pre><code id="caesar-result"></code></pre>
+                                </div>
+                            </div>
+                            <div class="form-card">
+                                <h3>Kriptanalisis Caesar (Brute Force)</h3>
+                                <div class="form-group">
+                                    <label for="caesar-bf-text">Masukkan Ciphertext:</label>
+                                    <textarea id="caesar-bf-text" rows="3">KHOORFUBSWR</textarea>
+                                </div>
+                                <button class="btn btn-danger" onclick="runCaesar('brute_force')">Jalankan Brute Force</button>
+                                <div id="caesar-bf-container" class="table-container" style="display:none; margin-top:1rem; max-height:250px; overflow-y:auto;">
+                                    <table class="data-table" id="caesar-bf-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Key</th>
+                                                <th>Hasil Dekripsi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-vigenere">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Enkripsi & Dekripsi Vigenere</h3>
+                                <div class="form-group">
+                                    <label for="vigenere-text">Input Teks:</label>
+                                    <textarea id="vigenere-text" rows="3">VIGENERECIPHERDEMO</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vigenere-key">Kunci (Keyword):</label>
+                                    <input type="text" id="vigenere-key" value="KEY">
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="runVigenere('encrypt')">Enkripsi</button>
+                                    <button class="btn btn-secondary" onclick="runVigenere('decrypt')">Dekripsi</button>
+                                </div>
+                                <div id="vigenere-result-container" class="output-box" style="display:none;">
+                                    <strong>Hasil:</strong>
+                                    <pre><code id="vigenere-result"></code></pre>
+                                </div>
+                            </div>
+                            <div class="form-card">
+                                <h3>Analisis Kasiski & IoC</h3>
+                                <div class="form-group">
+                                    <label for="vigenere-anal-text">Masukkan Ciphertext:</label>
+                                    <textarea id="vigenere-anal-text" rows="3">FMSIPEVIGIFREIHBK</textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="runVigenere('analyze')">Hitung IoC & Estimasi Kasiski</button>
+                                <div id="vigenere-anal-container" style="display:none; margin-top:1rem;">
+                                    <p><strong>Index of Coincidence (IoC):</strong> <code id="vigenere-ioc-val"></code></p>
+                                    <div class="chart-container" style="position: relative; height:200px;">
+                                        <canvas id="vigenere-chart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-playfair">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Enkripsi & Dekripsi Playfair</h3>
+                                <div class="form-group">
+                                    <label for="playfair-text">Input Teks:</label>
+                                    <textarea id="playfair-text" rows="3">PLAYFAIRTEST</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="playfair-key">Kunci (Key):</label>
+                                    <input type="text" id="playfair-key" value="MONARCHY">
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="runPlayfair('encrypt')">Enkripsi</button>
+                                    <button class="btn btn-secondary" onclick="runPlayfair('decrypt')">Dekripsi</button>
+                                </div>
+                                <div id="playfair-result-container" class="output-box" style="display:none;">
+                                    <strong>Hasil:</strong>
+                                    <pre><code id="playfair-result"></code></pre>
+                                </div>
+                            </div>
+                            <div class="form-card">
+                                <h3>Matriks Kunci 5x5 (Playfair Matrix)</h3>
+                                <div class="matrix-wrapper" id="playfair-matrix-container">
+                                    <!-- Rendered dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: SYMMETRIC CIPHERS -->
+            <section id="page-symmetric" class="page-section">
+                <div class="title-banner">
+                    <h1 class="title-header">Kriptografi Simetris</h1>
+                    <p class="subtitle-header">Advanced Encryption Standard (AES) & DES</p>
+                </div>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="tab-aes">AES-256 (CBC & CTR)</button>
+                        <button class="tab-button" data-tab="tab-des">DES vs Triple-DES</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-aes">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Konfigurasi AES Enkripsi</h3>
+                                <div class="form-group">
+                                    <label for="aes-password">Password (Kunci Derivasi):</label>
+                                    <input type="password" id="aes-password" value="SuperSecretPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="aes-plaintext">Plaintext:</label>
+                                    <textarea id="aes-plaintext" rows="3">Rahasia Penting Keamanan Siber</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="aes-iv">IV (CBC Mode - 16 Bytes Hex):</label>
+                                    <input type="text" id="aes-iv" value="000102030405060708090a0b0c0d0e0f">
+                                </div>
+                                <div class="form-group">
+                                    <label for="aes-nonce">Nonce (CTR Mode - Integer):</label>
+                                    <input type="number" id="aes-nonce" value="0">
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="runSymmetric('aes_cbc', 'encrypt')">AES-CBC Enkripsi</button>
+                                    <button class="btn btn-primary" onclick="runSymmetric('aes_ctr', 'encrypt')">AES-CTR Enkripsi</button>
+                                </div>
+                            </div>
+                            
+                            <div class="form-card">
+                                <h3>Output & Dekripsi AES</h3>
+                                <div class="form-group">
+                                    <label for="aes-ciphertext">Ciphertext (Hex):</label>
+                                    <textarea id="aes-ciphertext" rows="3"></textarea>
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-secondary" onclick="runSymmetric('aes_cbc', 'decrypt')">AES-CBC Dekripsi</button>
+                                    <button class="btn btn-secondary" onclick="runSymmetric('aes_ctr', 'decrypt')">AES-CTR Dekripsi</button>
+                                </div>
+                                <div id="aes-result-container" class="output-box" style="display:none;">
+                                    <p><strong>Derived Key:</strong> <code id="aes-key-out"></code></p>
+                                    <p><strong>Hasil Dekripsi:</strong> <code id="aes-plaintext-out"></code></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-des">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Demonstrasi Performa DES vs 3DES</h3>
+                                <div class="form-group">
+                                    <label for="des-password">Password Kunci:</label>
+                                    <input type="password" id="des-password" value="DES_SecretPassword">
+                                </div>
+                                <div class="form-group">
+                                    <label for="des-plaintext">Plaintext:</label>
+                                    <textarea id="des-plaintext" rows="3">UAS Kriptografi Kelas A</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="des-iv">IV (8 Bytes Hex):</label>
+                                    <input type="text" id="des-iv" value="0102030405060708">
+                                </div>
+                                <button class="btn btn-danger" onclick="runSymmetric('des_compare', 'compare')">Bandingkan DES & 3DES</button>
+                            </div>
+                            
+                            <div class="form-card">
+                                <h3>Hasil Analisis Komparasi</h3>
+                                <div id="des-compare-results" style="display:none;">
+                                    <div class="output-box" style="background:#1e1b4b; border-color:#312e81;">
+                                        <strong>1. DES (Insecure, Fast)</strong>
+                                        <p>Derived Key: <code id="des-key-hex"></code></p>
+                                        <p>Ciphertext: <code id="des-cipher-hex" style="word-break: break-all;"></code></p>
+                                        <p>Waktu Enkripsi: <span id="des-time-val" style="color:#f87171; font-weight:bold;"></span> ms</p>
+                                    </div>
+                                    <div class="output-box" style="background:#022c22; border-color:#064e3b; margin-top:1rem;">
+                                        <strong>2. Triple-DES (3DES) (More Secure, Slower)</strong>
+                                        <p>Derived Key: <code id="des3-key-hex"></code></p>
+                                        <p>Ciphertext: <code id="des3-cipher-hex" style="word-break: break-all;"></code></p>
+                                        <p>Waktu Enkripsi: <span id="des3-time-val" style="color:#34d399; font-weight:bold;"></span> ms</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: ASYMMETRIC CIPHERS -->
+            <section id="page-asymmetric" class="page-section">
+                <div class="title-banner">
+                    <h1 class="title-header">Kriptografi Asimetris</h1>
+                    <p class="subtitle-header">RSA Asymmetric Encryption & Diffie-Hellman Key Exchange</p>
+                </div>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="tab-rsa">RSA OAEP</button>
+                        <button class="tab-button" data-tab="tab-dh">Diffie-Hellman Key Exchange</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-rsa">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Key Generation (RSA-2048)</h3>
+                                <button class="btn btn-primary" onclick="runAsymmetric('rsa', 'generate')">Generate RSA Keypair</button>
+                                <div class="form-group" style="margin-top:1rem;">
+                                    <label for="rsa-pub">Public Key (PEM):</label>
+                                    <textarea id="rsa-pub" rows="5" readonly></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="rsa-priv">Private Key (PEM):</label>
+                                    <textarea id="rsa-priv" rows="5" readonly></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-card">
+                                <h3>Enkripsi & Dekripsi Asimetris</h3>
+                                <div class="form-group">
+                                    <label for="rsa-text">Input Teks / Ciphertext (Hex):</label>
+                                    <textarea id="rsa-text" rows="3">Pesan ini dienkripsi dengan kunci publik RSA</textarea>
+                                </div>
+                                <div class="button-group">
+                                    <button class="btn btn-primary" onclick="runAsymmetric('rsa', 'encrypt')">Enkripsi dengan Kunci Publik</button>
+                                    <button class="btn btn-secondary" onclick="runAsymmetric('rsa', 'decrypt')">Dekripsi dengan Kunci Privat</button>
+                                </div>
+                                <div id="rsa-result-container" class="output-box" style="display:none; margin-top:1rem;">
+                                    <strong>Hasil Operasi:</strong>
+                                    <textarea id="rsa-output" rows="3" readonly style="width:100%; background:#18181b; color:#10b981; border:1px solid #27272a; border-radius:6px; font-family:monospace;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-dh">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Diffie-Hellman Simulation Parameters</h3>
+                                <div class="form-group">
+                                    <label for="dh-scale">Pilih Skala Simulasi:</label>
+                                    <select id="dh-scale">
+                                        <option value="small">Demo Visual (Prima Kecil p=23, g=5)</option>
+                                        <option value="large">Standar Industri (RFC 3526 - 2048-bit)</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-primary" onclick="runAsymmetric('dh', 'exchange')">Simulasikan Pertukaran Kunci</button>
+                                
+                                <div id="dh-results" style="display:none; margin-top:1rem;">
+                                    <div class="output-box">
+                                        <strong>Alice (Private: <span id="dh-alice-priv"></span>)</strong>
+                                        <p>Menghitung Kunci Publik A = g^a mod p:</p>
+                                        <p><code id="dh-alice-pub" style="word-break: break-all;"></code></p>
+                                    </div>
+                                    <div class="output-box" style="margin-top:1rem;">
+                                        <strong>Bob (Private: <span id="dh-bob-priv"></span>)</strong>
+                                        <p>Menghitung Kunci Publik B = g^b mod p:</p>
+                                        <p><code id="dh-bob-pub" style="word-break: break-all;"></code></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-card">
+                                <h3>Shared Secret Derivation</h3>
+                                <div id="dh-secret-results" style="display:none;">
+                                    <div class="output-box" style="background:#022c22; border-color:#064e3b;">
+                                        <strong>Shared Secret Sukses Diturunkan!</strong>
+                                        <p>Alice menghitung s = B^a mod p:</p>
+                                        <p>Shared Secret: <code id="dh-shared-secret" style="color:#34d399; font-weight:bold;"></code></p>
+                                        <p>Bob menghitung s = A^b mod p:</p>
+                                        <p>Shared Secret: <code id="dh-shared-secret-bob" style="color:#34d399; font-weight:bold;"></code></p>
+                                    </div>
+                                    <div class="output-box" style="margin-top:1rem; background:#18181b;">
+                                        <strong>Derivasi Kunci AES-256 (SHA-256):</strong>
+                                        <p><code id="dh-aes-key" style="color:#10b981; font-weight:bold;"></code></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: HASH FUNCTIONS & MAC -->
+            <section id="page-hash" class="page-section">
+                <div class="title-banner">
+                    <h1 class="title-header">Fungsi Hash & MAC</h1>
+                    <p class="subtitle-header">Komparasi Fungsi Hash & Message Authentication Codes (HMAC)</p>
+                </div>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="tab-hash-compare">Hash Comparison & Avalanche</button>
+                        <button class="tab-button" data-tab="tab-hmac">HMAC</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-hash-compare">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Komparasi Hash Kriptografis</h3>
+                                <div class="form-group">
+                                    <label for="hash-text">Input Teks:</label>
+                                    <textarea id="hash-text" rows="3">UAS Kriptografi Kelas A</textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="runHash('hashes')">Hitung Hash</button>
+                                
+                                <div id="hash-table-container" class="table-container" style="display:none; margin-top:1rem;">
+                                    <table class="data-table" id="hash-results-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Algoritma</th>
+                                                <th>Panjang (Bits)</th>
+                                                <th>Hash Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="form-card">
+                                <h3>Avalanche Effect Analysis</h3>
+                                <div class="form-group">
+                                    <label for="av-text1">Teks 1:</label>
+                                    <input type="text" id="av-text1" value="UAS Kriptografi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="av-text2">Teks 2 (Beda 1 Karakter):</label>
+                                    <input type="text" id="av-text2" value="UAS Kriptografy">
+                                </div>
+                                <button class="btn btn-danger" onclick="runHash('avalanche')">Bandingkan Hash SHA-256</button>
+                                
+                                <div id="av-results-container" class="output-box" style="display:none; margin-top:1rem; background:#451a03; border-color:#78350f; color:#fbbf24;">
+                                    <strong>Hasil Efek Longsoran (Avalanche):</strong>
+                                    <p style="font-size:0.9rem; line-height:1.4;">Hash 1: <code id="av-hash1" style="font-size:0.8rem; word-break:break-all;"></code></p>
+                                    <p style="font-size:0.9rem; line-height:1.4;">Hash 2: <code id="av-hash2" style="font-size:0.8rem; word-break:break-all;"></code></p>
+                                    <p id="av-summary" style="margin-top:0.5rem; font-weight:bold;"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-hmac">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Pembuatan HMAC-SHA256</h3>
+                                <div class="form-group">
+                                    <label for="hmac-msg">Pesan:</label>
+                                    <textarea id="hmac-msg" rows="3">Kirim uang Rp 1.000.000 ke rekening A</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hmac-key">Kunci Rahasia (Secret Key):</label>
+                                    <input type="text" id="hmac-key" value="HMAC_Shared_Secret_Key">
+                                </div>
+                                <button class="btn btn-primary" onclick="runHMAC('generate')">Buat HMAC Signature</button>
+                                <div id="hmac-gen-container" class="output-box" style="display:none; margin-top:1rem;">
+                                    <strong>Signature HMAC (Hex):</strong>
+                                    <pre><code id="hmac-signature-out" style="word-break: break-all;"></code></pre>
+                                </div>
+                            </div>
+                            
+                            <div class="form-card">
+                                <h3>Verifikasi Integritas HMAC</h3>
+                                <div class="form-group">
+                                    <label for="hmac-v-msg">Pesan yang Diterima:</label>
+                                    <textarea id="hmac-v-msg" rows="3">Kirim uang Rp 1.000.000 ke rekening A</textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="hmac-v-sig">Signature HMAC yang Diterima:</label>
+                                    <input type="text" id="hmac-v-sig">
+                                </div>
+                                <button class="btn btn-secondary" onclick="runHMAC('verify')">Verifikasi Integritas Pesan</button>
+                                <div id="hmac-verify-container" class="output-box" style="display:none; margin-top:1rem;">
+                                    <p id="hmac-verify-result"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: DIGITAL SIGNATURE -->
+            <section id="page-signature" class="page-section">
+                <div class="title-banner">
+                    <h1 class="title-header">Tanda Tangan Digital</h1>
+                    <p class="subtitle-header">RSA-PSS & DSA Digital Signature Simulation</p>
+                </div>
+                
+                <div class="grid-2">
+                    <div class="form-card">
+                        <h3>Pembangkitan Kunci & Penandatanganan</h3>
+                        <div class="form-group">
+                            <label for="sig-algo">Pilih Algoritma:</label>
+                            <select id="sig-algo">
+                                <option value="RSA-PSS">RSA-PSS</option>
+                                <option value="DSA">DSA</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" onclick="runSignature('generate_keys')">Generate Pasangan Kunci</button>
+                        
+                        <div class="form-group" style="margin-top:1rem;">
+                            <label for="sig-pub">Public Key (PEM):</label>
+                            <textarea id="sig-pub" rows="4" readonly></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="sig-priv">Private Key (PEM):</label>
+                            <textarea id="sig-priv" rows="4" readonly></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="sig-doc">Dokumen Kontrak / Isi Legal:</label>
+                            <textarea id="sig-doc" rows="3">Saya yang bertanda tangan di bawah ini menyetujui kontrak kerja sama proyek pengadaan server UAS.</textarea>
+                        </div>
+                        <button class="btn btn-danger" onclick="runSignature('sign')">Tandatangani Dokumen (Sign)</button>
+                    </div>
+                    
+                    <div class="form-card">
+                        <h3>Verifikasi Tanda Tangan</h3>
+                        <div class="form-group">
+                            <label for="sig-v-doc">Dokumen untuk Diverifikasi:</label>
+                            <textarea id="sig-v-doc" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="sig-v-val">Signature (Hex):</label>
+                            <textarea id="sig-v-val" rows="3"></textarea>
+                        </div>
+                        <button class="btn btn-secondary" onclick="runSignature('verify')">Verifikasi Keabsahan Dokumen</button>
+                        
+                        <div id="sig-results-container" class="output-box" style="display:none; margin-top:1rem;">
+                            <p id="sig-verify-result" style="font-weight:bold;"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: ATTACK SIMULATIONS -->
+            <section id="page-attacks" class="page-section">
+                <div class="title-banner">
+                    <h1 class="title-header">Simulasi Serangan</h1>
+                    <p class="subtitle-header">Kriptanalisis Frekuensi Huruf & Birthday Attack (Collision)</p>
+                </div>
+                
+                <div class="tab-container">
+                    <div class="tab-buttons">
+                        <button class="tab-button active" data-tab="tab-freq">Frequency Analysis</button>
+                        <button class="tab-button" data-tab="tab-birthday">Birthday Attack Paradox</button>
+                    </div>
+
+                    <div class="tab-content active" id="tab-freq">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Analisis Frekuensi Huruf</h3>
+                                <div class="form-group">
+                                    <label for="freq-text">Masukkan Ciphertext:</label>
+                                    <textarea id="freq-text" rows="4">KHOOR FUBSWR JUDSKB CLSKHU DWWDFN GHPRVWUDWLRQ ZLWK ORQJHU WHAW IRU DFFXUDWH IUHTXHQFB DQDOBVLV</textarea>
+                                </div>
+                                <button class="btn btn-primary" onclick="runAttacks('frequency')">Hitung & Bandingkan Frekuensi</button>
+                                
+                                <div id="freq-chart-container" style="display:none; margin-top:1rem; position:relative; height:250px;">
+                                    <canvas id="freq-chart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="form-card">
+                                <h3>Auto-Decrypt (Language Scoring)</h3>
+                                <p>Algoritma akan menganalisis pergeseran huruf Caesar terbaik dengan menghitung skor deviasi frekuensi terkecil dibandingkan bahasa Inggris standar.</p>
+                                <button class="btn btn-danger" id="freq-decrypt-btn" style="display:none;" onclick="runAttacks('auto_decrypt')">Pecahkan Kunci Otomatis</button>
+                                
+                                <div id="freq-dec-result" class="output-box" style="display:none; margin-top:1rem; background:#022c22; border-color:#064e3b; color:#34d399;">
+                                    <p>Kunci Terbaik: <strong>Shift <span id="freq-best-key"></span></strong> (Deviasi: <span id="freq-best-score"></span>)</p>
+                                    <p>Hasil Dekripsi: <code id="freq-plaintext-out"></code></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="tab-birthday">
+                        <div class="grid-2">
+                            <div class="form-card">
+                                <h3>Kalkulator Birthday Paradox</h3>
+                                <div class="form-group">
+                                    <label for="birthday-people">Jumlah Orang: <span id="birthday-people-val">23</span></label>
+                                    <input type="range" id="birthday-people" min="1" max="100" value="23">
+                                </div>
+                                <button class="btn btn-primary" onclick="runAttacks('birthday_calc')">Hitung Probabilitas Tumbukan</button>
+                                <p style="margin-top:1rem;">Probabilitas minimal 2 orang memiliki hari ulang tahun sama: <strong id="birthday-prob-out" style="color:#10b981;"></strong></p>
+                                
+                                <div class="chart-container" style="position:relative; height:200px; margin-top:1rem;">
+                                    <canvas id="birthday-chart"></canvas>
+                                </div>
+                            </div>
+                            
+                            <div class="form-card">
+                                <h3>Simulasi Tumbukan Hash (Hash Collision)</h3>
+                                <div class="form-group">
+                                    <label for="birthday-bits">Panjang Bit Hash:</label>
+                                    <select id="birthday-bits">
+                                        <option value="12">12-bit</option>
+                                        <option value="16">16-bit</option>
+                                        <option value="20">20-bit</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-danger" onclick="runAttacks('birthday_collision')">Cari Collision Hash</button>
+                                
+                                <div id="birthday-collision-out" class="output-box" style="display:none; margin-top:1rem;">
+                                    <p>Ekspektasi Percobaan: <strong>~<span id="coll-expected"></span> kali</strong></p>
+                                    <div id="coll-success-box" style="display:none;">
+                                        <p style="color:#34d399; font-weight:bold;">✔ COLLISION DITEMUKAN!</p>
+                                        <p>Jumlah Percobaan: <span id="coll-attempts"></span> kali</p>
+                                        <p>Hash (Hex): <code id="coll-hash"></code></p>
+                                        <p>Input 1 (Hex): <code id="coll-in1"></code></p>
+                                        <p>Input 2 (Hex): <code id="coll-in2"></code></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- Core JS Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
