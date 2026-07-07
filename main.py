@@ -69,6 +69,9 @@ MENU_ITEMS = [
         ("6a", "Frequency Analysis Attack",              "06_attacks/frequency_analysis.py"),
         ("6b", "Birthday Attack Simulation",             "06_attacks/birthday_attack.py"),
     ]),
+    ("07", "Aplikasi Praktis", [
+        ("7a", "CRUD Catatan Aman (AES-256 + HMAC)",     "07_secure_crud/secure_crud.py"),
+    ]),
 ]
 
 
@@ -131,7 +134,7 @@ def main():
         choice = input(Fore.CYAN + Style.BRIGHT + "  Pilih eksperimen: ").strip().lower()
 
         if choice in ("q", "quit", "exit"):
-            print(Fore.YELLOW + "\n  Sampai jumpa! Selamat belajar kriptografi! 🔐\n")
+            print(Fore.YELLOW + "\n  Terima kasih telah menggunakan program ini\n")
             sys.exit(0)
         elif choice == "all":
             for path in all_paths:

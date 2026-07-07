@@ -141,13 +141,13 @@ class DigitalDocument:
         return rsa_verify_pss(self.to_bytes(), self.signature, self.signer_key)
 
     def display(self):
-        print(Fore.WHITE + f"  │  📄 Judul    : {self.title}")
-        print(Fore.WHITE + f"  │  ✍  Penulis  : {self.author}")
-        print(Fore.WHITE + f"  │  🕐 Waktu    : {self.timestamp}")
-        print(Fore.WHITE + f"  │  📝 Isi      : {self.content[:60]}...")
+        print(Fore.WHITE + f"  │  Judul    : {self.title}")
+        print(Fore.WHITE + f"  │  Penulis  : {self.author}")
+        print(Fore.WHITE + f"  │  Waktu    : {self.timestamp}")
+        print(Fore.WHITE + f"  │  Isi      : {self.content[:60]}...")
         if self.signature:
-            print(Fore.GREEN + f"  │  🔏 Signature: {self.signature.hex()[:50]}...")
-            print(Fore.GREEN + f"  │  📏 Sig Len  : {len(self.signature)} byte")
+            print(Fore.GREEN + f"  │  Signature: {self.signature.hex()[:50]}...")
+            print(Fore.GREEN + f"  │  Sig Len  : {len(self.signature)} byte")
 
 
 # ─────────────────────────────────────────────
