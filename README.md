@@ -1,4 +1,9 @@
-# Eksperimen Kriptografi - Semester 4 Peminatan Cyber Security
+# UAS Kriptografi
+
+### Anggota Kelompok:
+1. Atalla Ahsan Indrayana - 2410511039
+2. Athallah Abrar Duano - 2410511046
+3. Sulthon Daffa Arrafi - 2410511061
 
 Repositori ini berisi kumpulan implementasi praktis dan simulasi laboratorium untuk mata kuliah Kriptografi di Semester 4 Peminatan Cyber Security. Seluruh kode ditulis menggunakan Python dengan fokus pada pemahaman konsep teoretis, visualisasi proses, serta demonstrasi kekuatan dan kelemahan masing-masing algoritma.
 
