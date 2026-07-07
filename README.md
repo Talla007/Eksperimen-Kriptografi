@@ -15,8 +15,12 @@ Proyek ini terbagi menjadi beberapa modul utama yang mencakup kategori kriptogra
 
 ```
 crypto_experiments/
-├── main.py                          ← Launcher utama (menu interaktif)
-├── requirements.txt                 ← Daftar pustaka eksternal
+├── main.py                          ← Launcher utama CLI (menu interaktif)
+├── server.py                        ← Server API & Web Statis lokal (Python)
+├── index.html                       ← Antarmuka Web Utama (Dashboard Single Page App)
+├── style.css                        ← Desain visual web (CSS Vanilla)
+├── app.js                           ← Logika interaksi frontend web & AJAX calls
+├── requirements.txt                 ← Daftar pustaka dependensi CLI
 ├── utils.py                         ← Konfigurasi sistem dan encoding terminal
 │
 ├── 01_classical/                    ← Kriptografi Klasik
@@ -57,14 +61,22 @@ Instal seluruh dependensi yang diperlukan dengan menjalankan perintah berikut:
 pip install -r requirements.txt
 ```
 
-### 3. Menjalankan Launcher Utama
-Untuk mengakses seluruh eksperimen melalui menu interaktif yang terintegrasi, jalankan:
+### 3. Menjalankan Aplikasi Web (Direkomendasikan)
+Untuk mengakses visualisasi interaktif modern dan responsif melalui peramban (browser) web, jalankan server:
+```bash
+python server.py
+```
+Lalu buka peramban Anda dan akses tautan berikut:
+👉 **[http://localhost:8000](http://localhost:8000)**
+
+### 4. Menjalankan Launcher CLI
+Untuk mengakses seluruh eksperimen melalui menu interaktif teks pada terminal, jalankan:
 ```bash
 python main.py
 ```
 
-### 4. Menjalankan Eksperimen Secara Terpisah
-Setiap file demonstrasi dirancang agar dapat dijalankan secara mandiri. Contoh:
+### 5. Menjalankan Eksperimen Secara Terpisah (CLI)
+Setiap file demonstrasi dirancang agar dapat dijalankan secara mandiri melalui terminal. Contoh:
 ```bash
 python 01_classical/caesar_cipher.py
 python 02_symmetric/aes_demo.py
