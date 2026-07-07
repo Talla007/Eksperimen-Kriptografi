@@ -31,45 +31,49 @@ except ImportError:
 BANNER = r"""
 ╔══════════════════════════════════════════════════════════════════╗
 ║                                                                  ║
-║    ██████╗██████╗ ██╗   ██╗██████╗ ████████╗ ██████╗            ║
-║   ██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗╚══██╔══╝██╔═══██╗           ║
-║   ██║     ██████╔╝ ╚████╔╝ ██████╔╝   ██║   ██║   ██║           ║
-║   ██║     ██╔══██╗  ╚██╔╝  ██╔═══╝    ██║   ██║   ██║           ║
-║   ╚██████╗██║  ██║   ██║   ██║        ██║   ╚██████╔╝           ║
-║    ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝        ╚═╝    ╚═════╝            ║
+║    ██████╗██████╗ ██╗   ██╗██████╗ ████████╗ ██████╗             ║
+║   ██╔════╝██╔══██╗╚██╗ ██╔╝██╔══██╗╚══██╔══╝██╔═══██╗            ║
+║   ██║     ██████╔╝ ╚████╔╝ ██████╔╝   ██║   ██║   ██║            ║
+║   ██║     ██╔══██╗  ╚██╔╝  ██╔═══╝    ██║   ██║   ██║            ║
+║   ╚██████╗██║  ██║   ██║   ██║        ██║   ╚██████╔╝            ║
+║    ╚═════╝╚═╝  ╚═╝   ╚═╝   ╚═╝        ╚═╝    ╚═════╝             ║
 ║                                                                  ║
 ║         EKSPERIMEN KRIPTOGRAFI - SEMESTER 4                      ║
 ║              Peminatan Cyber Security                            ║
+║         Anggota Kelompok:                                        ║
+║         1. Atalla Ahsan Indrayana - 2410511039                   ║
+║         2. Athallah Abrar Duano - 2410511046                     ║
+║         3. Sulthon Daffa Arrafi - 2410511061                     ║
 ║                                                                  ║
 ╚══════════════════════════════════════════════════════════════════╝
 """
 
 MENU_ITEMS = [
-    ("01", "Kriptografi Klasik", [
+    ("1", "Kriptografi Klasik", [
         ("1a", "Caesar Cipher + Brute Force Attack",     "01_classical/caesar_cipher.py"),
         ("1b", "Vigenere Cipher + Kasiski Analysis",     "01_classical/vigenere_cipher.py"),
         ("1c", "Playfair Cipher",                        "01_classical/playfair_cipher.py"),
     ]),
-    ("02", "Kriptografi Simetris", [
+    ("2", "Kriptografi Simetris", [
         ("2a", "AES-256 (CBC & CTR Mode)",               "02_symmetric/aes_demo.py"),
         ("2b", "DES & Triple-DES",                       "02_symmetric/des_demo.py"),
     ]),
-    ("03", "Kriptografi Asimetris", [
+    ("3", "Kriptografi Asimetris", [
         ("3a", "RSA-2048 Enkripsi & Dekripsi",           "03_asymmetric/rsa_demo.py"),
         ("3b", "Diffie-Hellman Key Exchange",             "03_asymmetric/diffie_hellman.py"),
     ]),
-    ("04", "Fungsi Hash & MAC", [
+    ("4", "Fungsi Hash & MAC", [
         ("4a", "MD5, SHA-1, SHA-256, SHA-3",             "04_hashing/hash_demo.py"),
         ("4b", "HMAC - Message Authentication Code",     "04_hashing/hmac_demo.py"),
     ]),
-    ("05", "Tanda Tangan Digital", [
+    ("5", "Tanda Tangan Digital", [
         ("5a", "RSA-PSS & DSA Digital Signature",        "05_digital_signature/dsa_rsa_sign.py"),
     ]),
-    ("06", "Simulasi Serangan", [
+    ("6", "Simulasi Serangan", [
         ("6a", "Frequency Analysis Attack",              "06_attacks/frequency_analysis.py"),
         ("6b", "Birthday Attack Simulation",             "06_attacks/birthday_attack.py"),
     ]),
-    ("07", "Aplikasi Praktis", [
+    ("7", "Aplikasi Praktis", [
         ("7a", "CRUD Catatan Aman (AES-256 + HMAC)",     "07_secure_crud/secure_crud.py"),
     ]),
 ]
@@ -83,15 +87,27 @@ def print_banner():
     print(Fore.CYAN + Style.BRIGHT + BANNER)
 
 
-def print_menu():
-    print(Fore.YELLOW + Style.BRIGHT + "  DAFTAR EKSPERIMEN:\n")
+def print_main_menu():
+    print(Fore.YELLOW + Style.BRIGHT + "  ╔══════════════════════════════════════════════════════════════════╗")
+    print(Fore.YELLOW + Style.BRIGHT + "  ║                       MENU KATEGORI UTAMA                        ║")
+    print(Fore.YELLOW + Style.BRIGHT + "  ╚══════════════════════════════════════════════════════════════════╝")
     for group_id, group_name, items in MENU_ITEMS:
-        print(Fore.GREEN + Style.BRIGHT + f"  ── [{group_id}] {group_name}")
-        for code, label, _ in items:
-            print(Fore.WHITE + f"       ({code}) {label}")
-        print()
-    print(Fore.MAGENTA + "  (all) Jalankan semua eksperimen secara berurutan")
-    print(Fore.RED + "   (q)  Keluar\n")
+        sub_count = len(items)
+        print(Fore.GREEN + Style.BRIGHT + f"   [{group_id}] " + Fore.WHITE + f"{group_name:<38}" + Fore.CYAN + f"({sub_count} Eksperimen)")
+    print(Fore.YELLOW + "  ────────────────────────────────────────────────────────────────────")
+    print(Fore.MAGENTA + Style.BRIGHT + "   [A] Jalankan Semua Eksperimen")
+    print(Fore.RED + Style.BRIGHT + "   [Q] Keluar dari Program\n")
+
+
+def print_submenu(group_id: str, group_name: str, items: list):
+    print(Fore.YELLOW + Style.BRIGHT + f"  ╔══════════════════════════════════════════════════════════════════╗")
+    print(Fore.YELLOW + Style.BRIGHT + f"  ║   KATEGORI [{group_id}]: {group_name.upper():<46} ║")
+    print(Fore.YELLOW + Style.BRIGHT + f"  ╚══════════════════════════════════════════════════════════════════╝")
+    for code, label, _ in items:
+        print(Fore.GREEN + Style.BRIGHT + f"   ({code}) " + Fore.WHITE + f"{label}")
+    print(Fore.YELLOW + "  ────────────────────────────────────────────────────────────────────")
+    print(Fore.CYAN + Style.BRIGHT + "   [B] Kembali ke Menu Utama")
+    print(Fore.RED + Style.BRIGHT + "   [Q] Keluar dari Program\n")
 
 
 def run_script(path: str):
@@ -124,26 +140,52 @@ def build_lookup():
 
 def main():
     lookup = build_lookup()
+    groups = {group_id: (group_name, items) for group_id, group_name, items in MENU_ITEMS}
     all_paths = [path for _, _, items in MENU_ITEMS for _, _, path in items]
+
+    current_group = None
 
     while True:
         clear_screen()
         print_banner()
-        print_menu()
 
-        choice = input(Fore.CYAN + Style.BRIGHT + "  Pilih eksperimen: ").strip().lower()
+        if current_group is None:
+            print_main_menu()
+            choice = input(Fore.CYAN + Style.BRIGHT + "  Pilih Kategori (1-7) atau opsi lainnya: ").strip().lower()
 
-        if choice in ("q", "quit", "exit"):
-            print(Fore.YELLOW + "\n  Terima kasih telah menggunakan program ini\n")
-            sys.exit(0)
-        elif choice == "all":
-            for path in all_paths:
-                run_script(path)
-        elif choice in lookup:
-            run_script(lookup[choice])
+            if choice in ("q", "quit", "exit"):
+                print(Fore.YELLOW + "\n  Terima kasih telah menggunakan program ini. Sampai jumpa!\n")
+                sys.exit(0)
+            elif choice == "a":
+                print(Fore.YELLOW + "\n  Memulai eksekusi semua eksperimen...")
+                for path in all_paths:
+                    run_script(path)
+            elif choice in groups:
+                current_group = choice
+            else:
+                print(Fore.RED + f"\n  [ERROR] Pilihan '{choice}' tidak valid. Silakan pilih 1-7, A, atau Q.")
+                input(Fore.CYAN + "  Tekan ENTER untuk melanjutkan...")
         else:
-            print(Fore.RED + f"\n  [ERROR] Pilihan '{choice}' tidak valid.")
-            input(Fore.CYAN + "  Tekan ENTER untuk melanjutkan...")
+            group_name, items = groups[current_group]
+            print_submenu(current_group, group_name, items)
+            sub_lookup = {code.lower(): path for code, label, path in items}
+            
+            choice = input(Fore.CYAN + Style.BRIGHT + f"  Pilih Eksperimen ({items[0][0]}-{items[-1][0]}) atau opsi lainnya: ").strip().lower()
+
+            if choice in ("q", "quit", "exit"):
+                print(Fore.YELLOW + "\n  Terima kasih telah menggunakan program ini. Sampai jumpa!\n")
+                sys.exit(0)
+            elif choice == "b":
+                current_group = None
+            elif choice in sub_lookup:
+                run_script(sub_lookup[choice])
+            elif choice in groups:
+                # Allow directly switching to another main category
+                current_group = choice
+            else:
+                valid_codes = ", ".join([code for code, _, _ in items])
+                print(Fore.RED + f"\n  [ERROR] Pilihan '{choice}' tidak valid. Silakan masukkan {valid_codes}, B, atau Q.")
+                input(Fore.CYAN + "  Tekan ENTER untuk melanjutkan...")
 
 
 if __name__ == "__main__":
